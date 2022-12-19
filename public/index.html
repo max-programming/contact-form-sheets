@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 80%;
+        margin: auto;
+        margin-top: 50px;
+      }
+      form {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+
+      input[type='text'],
+      input[type='email'],
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+      }
+
+      input[type='submit'] {
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+      }
+
+      input[type='submit']:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form id="contactForm">
+        <label for="name">Name:</label><br />
+        <input type="text" id="name" /><br />
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" /><br />
+        <label for="message">Message:</label><br />
+        <textarea id="message"></textarea><br />
+        <input type="submit" value="Send" />
+      </form>
+    </div>
+    <script>
+      const contactForm = document.getElementById('contactForm');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const messageInput = document.getElementById('message');
+
+      contactForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        await fetch('/send-message', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: nameInput.value,
+            email: emailInput.value,
+            message: messageInput.value,
+          }),
+          method: 'POST',
+        });
+      });
+    </script>
+  </body>
+</html>
